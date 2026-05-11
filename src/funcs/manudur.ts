@@ -26,7 +26,7 @@ export class Manudur {
     this.eknirKm = lokKm - upphaf;
     this.gjaldPerKm = gjaldPerKm;
     this.gjald = this.eknirKm * gjaldPerKm;
-    this.id = `${Date.now()}-${Math.random()}.toString(36).slice(2, 8)}`;
+    this.id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   }
 
   static fromData(data: ManudurData): Manudur {
@@ -38,7 +38,7 @@ export class Manudur {
   toString(): string {
     const flokkurTexti =
       this.flokkur === "C"
-        ? "C (${formatNumber(this.thyngd)} kg)"
+        ? `C (${formatNumber(this.thyngd)} kg)`
         : this.flokkur;
 
     return `${this.dagsetning} · ${flokkurTexti}  ·  ${formatNumber(this.upphaf)} → ${formatNumber(this.lokKm)} (${formatNumber(this.eknirKm)} km)  ·  ${formatCurrency(this.gjald)} kr`;

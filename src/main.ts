@@ -105,7 +105,7 @@ function renderSogu(): void {
     }
 
     const flokkurTexti =
-      m.flokkur === "C" ? "C (${formatNumber(m.thyngd)} kg)" : m.flokkur;
+      m.flokkur === "C" ? `C (${formatNumber(m.thyngd)} kg)` : m.flokkur;
 
     const dateRow = document.createElement("div");
     dateRow.className = "entry-date";
