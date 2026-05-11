@@ -76,7 +76,7 @@ function CalculateResults(): Results {
 function updateUI(): void {
   const { heildKm, heildGjald, fjoldiManada } = CalculateResults();
   fjoldiManadaOutput.value = fjoldiManada.toString();
-  heildKmOutput.textContent = `${formatNumber(heildKm)} km / ${formatCurrency(heildGjald)} kr`;
+  heildKmOutput.textContent = `${formatNumber(heildKm)} km / ${formatCurrency(heildGjald)}`;
 
   if (heildKm > 0) {
     gjaldPerKmOutput.textContent = formatCurrency(heildGjald / heildKm);
@@ -117,7 +117,7 @@ function renderSogu(): void {
 
     const amountRow = document.createElement("div");
     amountRow.className = "entry-amount";
-    amountRow.textContent = `${formatCurrency(m.gjald)} kr`;
+    amountRow.textContent = formatCurrency(m.gjald);
 
     li.appendChild(dateRow);
     li.appendChild(detailRow);
@@ -211,7 +211,7 @@ function onSkra(): void {
 
 	const manKm = lokKm - upphaf;
 	const manGjald = manKm * gjaldPerKm;
-	manKmOutput.textContent = `${formatNumber(manKm)} km / ${formatCurrency(manGjald)} kr`;
+	manKmOutput.textContent = `${formatNumber(manKm)} km / ${formatCurrency(manGjald)}`;
 
 	updateUI();
 	renderSogu();
@@ -233,7 +233,7 @@ function onHreinsa(): void {
 	thyngdInput.placeholder = "Aðeins fyrir C-flokk";
 	upphafsInput.value = "0";
 	lokKmInput.value = "0";
-	manKmOutput.textContent = "0";
+	manKmOutput.textContent = `0 km / ${formatCurrency(0)}`;
 	flokkurInput.focus();
 
 }
@@ -247,7 +247,7 @@ function onEyda(): void {
 	vistaSogu(manadurSaga);
 	updateUI();
 	renderSogu();
-	manKmOutput.textContent = "0";
+	manKmOutput.textContent = `0 km / ${formatCurrency(0)}`;
 }
 
 function onHreinsaSogu(): void {
@@ -258,7 +258,7 @@ function onHreinsaSogu(): void {
 		hreinsaSoguStorage();
 		updateUI();
 		renderSogu();
-		manKmOutput.textContent = "0";
+		manKmOutput.textContent = `0 km / ${formatCurrency(0)}`;
 	}
 }
 
