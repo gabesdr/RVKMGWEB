@@ -76,13 +76,12 @@ function CalculateResults(): Results {
 function updateUI(): void {
   const { heildKm, heildGjald, fjoldiManada } = CalculateResults();
   fjoldiManadaOutput.value = fjoldiManada.toString();
-  heildKmOutput.textContent =
-    "${formatNumber(heildKm)} km / ${formatCurrency(heildGjald)} kr";
+  heildKmOutput.textContent = `${formatNumber(heildKm)} km / ${formatCurrency(heildGjald)} kr`;
 
   if (heildKm > 0) {
     gjaldPerKmOutput.textContent = formatCurrency(heildGjald / heildKm);
   } else {
-    gjaldPerKmOutput.textContent = "0.00";
+    gjaldPerKmOutput.textContent = formatCurrency(0);
   }
 }
 
@@ -163,4 +162,120 @@ function onSkra(): void {
     villa("Vinsamlegast sláðu inn gilt upphafs- og lokakílómetra");
     return;
   }
+
+	if (upphaf < 0 || lokKm < 0) {
+		villa("Kílómetrar geta ekki verið neikvæðir");
+		return;
+	}
+
+	if (lokKm < upphaf) {
+		villa("Lokakílómetrar geta ekki verið minni en upphafskílómetrar");
+		return;
+	}
+
+	if (lokKm === upphaf) {
+		villa("Lokakílómetrar geta ekki verið jafnir upphafskílómetrum");
+		return;
+	}
+
+	let gjaldPerKm: number;
+	let thyngd = 0;
+	if (flokkur === "C") {
+		const thyngdRaw = thyngdInput.value.trim();
+		if (thyngdRaw === "") {
+			villa("Sláðu inn þyngd fyrir C-flokk bíla");
+			return;
+		}
+		thyngd = parseInt(thyngdRaw, 10);
+		if (Number.isNaN(thyngd)) {
+			villa(("Ógild þyngd - sláðu inn tölu í kg"));
+			return;
+		}
+		if (thyngd <= 3500) {
+			villa("Þyngd fyrir C-flokk bíla verður að vera yfir 3500 kg");
+			return;
+		}
+		if (thyngd > 10000) {
+			villa("Þyng er utan taxtans (hámark 10.000kg)");
+			return;
+		}
+		gjaldPerKm = gjaldFyrirThyngd(thyngd);
+	} else {
+		gjaldPerKm = gjaldFyrirFlokk(flokkur);
+	}
+
+	const ny = new Manudur(dagsetningIDag(), flokkur, thyngd, upphaf, lokKm, gjaldPerKm);
+	manadurSaga.unshift(ny);
+
+	vistaSogu(manadurSaga);
+
+	const manKm = lokKm - upphaf;
+	const manGjald = manKm * gjaldPerKm;
+	manKmOutput.textContent = `${formatNumber(manKm)} km / ${formatCurrency(manGjald)} kr`;
+
+	updateUI();
+	renderSogu();
+
+	flokkurInput.value = "";
+	thyngdInput.value = "";
+	thyngdInput.disabled = true;
+	thyngdInput.placeholder = "Aðeins fyrir C-flokk";
+	upphafsInput.value = "0";
+	lokKmInput.value = "0";
+
+	flokkurInput.focus();
 }
+
+function onHreinsa(): void {
+	flokkurInput.value = "";
+	thyngdInput.value = "";
+	thyngdInput.disabled = true;
+	thyngdInput.placeholder = "Aðeins fyrir C-flokk";
+	upphafsInput.value = "0";
+	lokKmInput.value = "0";
+	manKmOutput.textContent = "0";
+	flokkurInput.focus();
+
+}
+
+function onEyda(): void {
+	if (validId === null) {
+		villa("Vinsamlegast veldu færslu til að eyða");
+		return;
+	}
+	manadurSaga = manadurSaga.filter((m) => m.id !== validId);
+	vistaSogu(manadurSaga);
+	updateUI();
+	renderSogu();
+	manKmOutput.textContent = "0";
+}
+
+function onHreinsaSogu(): void {
+	if (manadurSaga.length === 0) return;
+	if (confirm("Ertu viss um að þú viljir hreinsa alla söguna? Það er ekki hægt að afturkalla.")) {
+		manadurSaga = [];
+		validId = null;
+		hreinsaSoguStorage();
+		updateUI();
+		renderSogu();
+		manKmOutput.textContent = "0";
+	}
+}
+
+skraBtn.addEventListener("click", onSkra);
+hreinsaBtn.addEventListener("click", onHreinsa);
+eydaBtn.addEventListener("click", onEyda);
+hreinsaSoguBtn.addEventListener("click", onHreinsaSogu);
+
+[flokkurInput, thyngdInput, upphafsInput, lokKmInput].forEach((input) => {
+	input.addEventListener("keydown", (e: KeyboardEvent) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			onSkra();
+		}
+	});
+});
+
+// --- Initial render ---
+updateUI();
+renderSogu();
