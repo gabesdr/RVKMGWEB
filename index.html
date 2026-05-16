@@ -3,87 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reiknivél fyrir Kílómetrargjald</title>
+    <title>Kílómetrabókin</title>
   </head>
 
   <body>
-    <section class="form-panel">
-      <h1 class="page-title">Reiknivél fyrir Kílómetrargjald</h1>
+    <div class="app">
+      <section class="form-panel">
+        <h1 class="page-title">Kílómetrabókin</h1>
+        <h2 class="sub-title">Reiknivél fyrir kílómetrargjald</h2>
 
-      <div class="row">
-        <label for="flokkurInput"> Flokkur (A / B / C) </label>
-        <input
-          id="flokkurInput"
-          type="text"
-          maxlength="1"
-          placeholder="Skráðu inn flokk t.d. A, B eða C."
-        />
-      </div>
+        <div class="row">
+          <label for="flokkurInput"> Flokkur (A / B / C) </label>
+          <input
+            id="flokkurInput"
+            type="text"
+            maxlength="1"
+            placeholder="Skráðu inn flokk t.d. A, B eða C."
+          />
+        </div>
 
-      <div class="row">
-        <label for="thyngdInput">Þyngd, kg (Aðeins fyrir C)</label>
-        <input
-          id="thyngdInput"
-          type="number"
-          disabled
-          placeholder="Aðeins fyrir C-flokk"
-        />
-      </div>
+        <div class="row">
+          <label for="thyngdInput">Þyngd, kg (Aðeins fyrir C)</label>
+          <input
+            id="thyngdInput"
+            type="number"
+            disabled
+            placeholder="Aðeins fyrir C-flokk"
+          />
+        </div>
 
-      <div class="row">
-        <label for="upphafsInput">Upphafs km Staða</label>
-        <input id="upphafsInput" type="number" value="0" />
-      </div>
+        <div class="row">
+          <label for="upphafsInput">Upphafs km Staða</label>
+          <input id="upphafsInput" type="number" value="0" />
+        </div>
 
-      <div class="row">
-        <label for="lokKmInput">Loka km staða</label>
-        <input id="lokKmInput" type="number" value="0" />
-      </div>
+        <div class="row">
+          <label for="lokKmInput">Loka km staða</label>
+          <input id="lokKmInput" type="number" value="0" />
+        </div>
 
-      <div class="button-row">
-        <button id="skraBtn" class="primary">Skrá km stöðu</button>
-        <button id="hreinsaBtn" class="secondary">Hreinsa</button>
-      </div>
+        <div class="button-row">
+          <button id="skraBtn" class="primary">Skrá km stöðu</button>
+          <button id="hreinsaBtn" class="secondary">Hreinsa</button>
+        </div>
 
-      <div class="row">
-        <label for="manKmOutput">Þessi mánuður (km/kr)</label>
-        <output id="manKmOutput" class="output">0</output>
-      </div>
+        <div class="row">
+          <label for="manKmOutput">Þessi mánuður (km/kr)</label>
+          <output id="manKmOutput" class="output">0</output>
+        </div>
 
-      <div class="row">
-        <label for="heildKmOutput">Samtals allir mán. (km/kr)</label>
-        <output id="heildKmOutput" class="output">0</output>
-      </div>
+        <div class="row">
+          <label for="heildKmOutput">Samtals allir mán. (km/kr)</label>
+          <output id="heildKmOutput" class="output">0</output>
+        </div>
 
-      <div class="row">
-        <label for="fjoldiManadaOutput">Fjöldi mánaða</label>
-        <output id="fjoldiManadaOutput" class="output">0</output>
-      </div>
+        <div class="row">
+          <label for="fjoldiManadaOutput">Fjöldi mánaða</label>
+          <output id="fjoldiManadaOutput" class="output">0</output>
+        </div>
 
-      <div class="row hero-row">
-        <label for="gjaldPerKmOutput">Meðalgjald á Km</label>
-        <output id="gjaldPerKmOutput" class="output hero">0.00</output>
-      </div>
-    </section>
+        <div class="row hero-row">
+          <label for="gjaldPerKmOutput">Meðalgjald á Km</label>
+          <output id="gjaldPerKmOutput" class="output hero">0.00</output>
+        </div>
+      </section>
 
-    <aside class="history-panel">
-      <h2 class="history-title">Skráningar</h2>
+      <aside class="history-panel">
+        <h2 class="history-title">Skráningar</h2>
 
-      <ul id="soguListi" class="history-list">
-        <li class="empty-state">Ekkert í skrá</li>
-      </ul>
+        <ul id="soguListi" class="history-list">
+          <li class="empty-state">Ekkert í skrá</li>
+        </ul>
 
-      <div class="history-buttons">
-        <button id="eydaBtn" class="danger">Eyða úr skrá</button>
-        <button id="hreinsaSoguBtn" class="muted">Hreinsa skrá</button>
-      </div>
-    </aside>
+        <div class="history-buttons">
+          <button id="eydaBtn" class="danger">Eyða úr skrá</button>
+          <button id="hreinsaSoguBtn" class="muted">Hreinsa skrá</button>
+        </div>
+      </aside>
+    </div>
 
-	<footer class="footer">
-		<p>Made with love ❤️ - Gabes</p>
-		<p>This is a placeholder footer by the way</p>
-		<p>UI is placeholder</p>
-	</footer>
+    <footer class="footer">
+      <p>Made by Gabes</p>
+      <p></p>
+      <p>
+        <a href="https://ko-fi.com/thislinkdoesntexist" target="_blank">
+          ~ Buy me Coffee! ☕ ~
+        </a>
+      </p>
+    </footer>
 
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
