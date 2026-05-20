@@ -11,6 +11,8 @@ body {
   font-size: 13px;
   color: #1a2b3c;
   min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 .app {
